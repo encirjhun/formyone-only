@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Valentine Countdown</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #ffdde1;
+            color: #d6336c;
+            padding: 50px;
+        }
+        .container {
+            max-width: 600px;
+            margin: auto;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+        }
+        .hidden {
+            display: none;
+            margin-top: 20px;
+            font-size: 20px;
+        }
+        button {
+            background-color: #ff4081;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 18px;
+            cursor: pointer;
+            border-radius: 5px;
+            margin-top: 20px;
+        }
+        button:hover {
+            background-color: #d6336c;
+        }
+        #countdown {
+            font-size: 24px;
+            margin: 20px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Hey, Beautiful! ❤️</h1>
+        <p>I'm counting down the moments until I ask you something special...</p>
+        <div id="countdown"></div>
+        <p id="valentineMessage" class="hidden">Will you be my Valentine? 💖</p>
+        <button id="revealButton" class="hidden" onclick="showOptions()">Click Me</button>
+        
+        <div id="options" class="hidden">
+            <button onclick="sendEmail(true)">Yes</button>
+            <button onclick="sendEmail(false)">No</button>
+        </div>
+    </div>
+
+    <script>
+        function countdownTimer() {
+            const targetDate = new Date("Feb 14, 2025 00:00:00").getTime();
+            const timer = setInterval(function() {
+                const now = new Date().getTime();
+                const distance = targetDate - now;
+                
+                const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+                
+                document.getElementById("countdown").innerHTML = `${days}d ${hours}h ${minutes}m ${seconds}s`;
+                
+                if (distance < 0) {
+                    clearInterval(timer);
+                    document.getElementById("countdown").innerHTML = "Time's Up!";
+                    document.getElementById("revealButton").style.display = "block";
+                }
+            }, 1000);
+        }
+        
+        function showOptions() {
+            document.getElementById('valentineMessage').style.display = 'block';
+            document.getElementById('options').style.display = 'block';
+        }
+        
+        function sendEmail(accepted) {
+            const email = "encirjhun@gmail.com";
+            const subject = accepted ? "She Said Yes!" : "She Said No...";
+            const body = accepted ? "She accepted to be my Valentine! ❤️" : "Unfortunately, she declined.";
+            window.location.href = `mailto:${email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+        }
+        
+        countdownTimer();
+    </script>
+</body>
+</html>
